@@ -1,0 +1,69 @@
+import java.util.*;
+class Main{
+static class Node{
+    int data;
+    Node next;
+    Node prev;
+}
+
+static Node sort(Node head) {
+    if (head == null || head.next == null)
+        return head;
+    
+    Node current = head;
+    Node index = null;
+    int temp;
+
+    while (current != null) {
+        // Index node will point to the node next to current
+        index = current.next;
+
+        while (index != null) {
+            // If current node's data is greater than index node's data, swap them
+            if (current.data > index.data) {
+                temp = current.data;
+                current.data = index.data;
+                index.data = temp;
+            }
+            index = index.next;
+        }
+        current = current.next;
+    }
+    return head;
+}
+
+
+static Node push(Node head_ref, int new_data) {
+	Node new_node = new Node();
+	new_node.data = new_data;
+	new_node.prev = null;
+	new_node.next = head_ref;
+	if( head_ref != null)
+		head_ref.prev = new_node;
+	head_ref = new_node;
+	return head_ref;
+	}
+
+static void printlist(Node head) { 
+	if(head == null)
+		System.out.print("Doubly Linked list is empty");
+	while(head != null) {
+		System.out.print(head.data + " ");
+		head = head.next;
+	}
+}
+
+public static void main(String args[]) {
+	Scanner sc = new Scanner(System.in);
+	int n=sc.nextInt();
+	Node head = null;
+	int arr[] = new int[n];
+	for(int i=0;i<n;i++) {
+	int m=sc.nextInt();
+	head = push(head,m);
+    }
+    head = sort(head);
+    System.out.println("After sorting:");
+    printlist(head);
+    }
+}
